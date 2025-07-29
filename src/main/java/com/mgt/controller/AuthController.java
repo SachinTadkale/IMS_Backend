@@ -13,8 +13,7 @@ import com.mgt.serviceimpl.OtpService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import com.mgt.repository.UserRepo;
+import com.mgt.repository.OtpVerificationRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -28,16 +27,13 @@ public class AuthController {
     private OtpService otpService;
 
     @Autowired
-    private UserRepo userRepository; // Add this
+    private OtpVerificationRepository otpVerificationRepository; // Add this
 
     @PostMapping("/sendOtp")
     public ResponseEntity<?> sendOtp(@RequestParam String email) {
-        System.out.println("send otp function is called  " + email);
 
-        // Optional: Check if email exists before sending OTP
-        if (!userRepository.existsByEmail(email)) {
-            return ResponseEntity.status(404).body(Collections.singletonMap("message", "Email not found"));
-        }
+        System.out.println("send otp controller is called  " + email);
+
 
         String otp = otpService.generatedOtp(email);
         emailService.sendAuthEmail(email, "Your Login OTP", "Use this OTP to log in your email: " + otp);
@@ -49,16 +45,13 @@ public class AuthController {
             @RequestParam String email,
             @RequestParam String otp) {
 
-        email = email.toLowerCase(); // normalize to avoid mismatch
+                System.out.println("Recived :"+otp+"and "+email);
 
-        if (!userRepository.existsByEmail(email)) {
-            return ResponseEntity.status(404).body(Collections.singletonMap("message", "Email not found"));
-        }
 
         boolean isValid = otpService.verifyOtp(email, otp);
 
         if (isValid) {
-            return ResponseEntity.ok(Collections.singletonMap("message", "Login successful"));
+            return ResponseEntity.ok(Collections.singletonMap("message", "Email is verified !"));
         } else {
             return ResponseEntity.status(401).body(Collections.singletonMap("message", "Invalid or expired OTP"));
         }
