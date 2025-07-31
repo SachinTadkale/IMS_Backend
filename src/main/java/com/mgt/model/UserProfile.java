@@ -1,5 +1,7 @@
 package com.mgt.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -23,15 +25,34 @@ public class UserProfile {
     @Column(name = "imageUrl")
     private String imageUrl; // store image file path or URL
 
+    @Column(name = "store_type")
+    private String storeType;
+
+    @Column(name = "role")
+    private Role role;
+
+    @Column(name = "subscription")
+    private boolean subscription;
+
+    @OneToOne
+    @JsonBackReference
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public UserProfile() {
     }
 
-    public UserProfile(Long id, String name, String email, String phone, String imageUrl) {
+    public UserProfile(Long id, String name, String email, String phone, String imageUrl, String storeType, Role role,
+            boolean subscription, User user) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.imageUrl = imageUrl;
+        this.storeType = storeType;
+        this.role = role;
+        this.subscription = subscription;
+        this.user = user;
     }
 
     public Long getId() {
@@ -72,6 +93,38 @@ public class UserProfile {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getStoreType() {
+        return storeType;
+    }
+
+    public void setStoreType(String storeType) {
+        this.storeType = storeType;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean isSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(boolean subscription) {
+        this.subscription = subscription;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     

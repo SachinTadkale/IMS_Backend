@@ -2,10 +2,9 @@ package com.mgt.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.*;
 
 @Entity
 public class Transaction {
@@ -19,7 +18,31 @@ public class Transaction {
     private Double amount;
     private String status; // PENDING, SUCCESS, FAILED
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
+
+    // Default constructor
+    public Transaction() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // All-args constructor
+    public Transaction(Long id, String transactionId, String upiLink, Double amount, String status,
+                       LocalDateTime createdAt, User user) {
+        this.id = id;
+        this.transactionId = transactionId;
+        this.upiLink = upiLink;
+        this.amount = amount;
+        this.status = status;
+        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
+        this.user = user;
+    }
+
+    // Getters and setters
 
     public Long getId() {
         return id;
@@ -61,6 +84,19 @@ public class Transaction {
         this.status = status;
     }
 
-    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
