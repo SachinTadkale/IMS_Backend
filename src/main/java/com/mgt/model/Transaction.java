@@ -13,12 +13,16 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String titel;
+    private String description;
     private String transactionId;
     private String upiLink;
     private Double amount;
     private String status; // PENDING, SUCCESS, FAILED
 
     private LocalDateTime createdAt;
+
+    private String imString;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -42,7 +46,37 @@ public class Transaction {
         this.user = user;
     }
 
+    
+
     // Getters and setters
+
+    public Transaction(Long id, String transactionId, String upiLink, Double amount, String status,
+            LocalDateTime createdAt, String imString, User user) {
+        this.id = id;
+        this.transactionId = transactionId;
+        this.upiLink = upiLink;
+        this.amount = amount;
+        this.status = status;
+        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
+        this.imString = imString;
+        this.user = user;
+    }
+
+    
+
+    public Transaction(Long id, String titel, String description, String transactionId, String upiLink, Double amount,
+            String status, LocalDateTime createdAt, String imString, User user) {
+        this.id = id;
+        this.titel = titel;
+        this.description = description;
+        this.transactionId = transactionId;
+        this.upiLink = upiLink;
+        this.amount = amount;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.imString = imString;
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -92,6 +126,9 @@ public class Transaction {
         this.createdAt = createdAt;
     }
 
+    
+
+
     public User getUser() {
         return user;
     }
@@ -99,4 +136,32 @@ public class Transaction {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getImString() {
+        return imString;
+    }
+
+    public void setImString(String imString) {
+        this.imString = imString;
+    }
+
+    public String getTitel() {
+        return titel;
+    }
+
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
+
+    
 }
