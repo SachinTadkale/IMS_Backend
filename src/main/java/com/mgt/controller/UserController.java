@@ -152,6 +152,7 @@ public class UserController {
             response.put("FullName", user.getFull_name());
             response.put("storeType", user.getStore_type());
             response.put("role", user.getRole());
+            response.put("paymentStatus", user.isPaymentStatus());
             response.put("status", user.getStatus());
             return ResponseEntity.ok(response);
 

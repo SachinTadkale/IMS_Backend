@@ -13,7 +13,7 @@ import com.mgt.serviceimpl.OtpService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import com.mgt.repository.OtpVerificationRepository;
+
 
 @RestController
 @RequestMapping("/api")
@@ -25,9 +25,6 @@ public class AuthController {
 
     @Autowired
     private OtpService otpService;
-
-    @Autowired
-    private OtpVerificationRepository otpVerificationRepository; // Add this
 
     @PostMapping("/sendOtp")
     public ResponseEntity<?> sendOtp(@RequestParam String email) {

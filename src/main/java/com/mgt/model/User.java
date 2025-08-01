@@ -301,6 +301,20 @@ public class User {
 		this.userProfile = userProfile;
 	}
 
+
+
+
+	public boolean isPaymentStatus() {
+		return paymentStatus;
+	}
+
+
+
+
+	public void setPaymentStatus(boolean paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
 	
 
 	
